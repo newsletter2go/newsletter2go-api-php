@@ -1,0 +1,21 @@
+{
+    "name": "newsletter2go/api",
+    "description": "PHP API implementation of the Newsletter2Go REST API (https://docs.newsletter2go.com/)",
+    "keywords": ["newsletter2go", "api", "rest", "client"],
+    "type": "library",
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-0": ["src/"]
+    },
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Newsletter2Go GmbH",
+            "email": "support@newsletter2go.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
