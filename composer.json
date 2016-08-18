@@ -8,7 +8,9 @@
         "ext-curl": "*"
     },
     "autoload": {
-        "psr-0": ["src/"]
+        "psr-4": {
+            "NL2GO\\": ["src/"]
+        }
     },
     "license": "GPL-3.0",
     "authors": [
