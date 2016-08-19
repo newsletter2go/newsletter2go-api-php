@@ -21,6 +21,8 @@ class Api
     private $access_token = "";
     private $refresh_token = "";
 
+    private $sslVerification = true;
+
 
     function __construct($authKey, $userEmail, $userPassword)
     {
@@ -29,6 +31,10 @@ class Api
         $this->user_pw = $userPassword;
         $this->getToken();
 
+    }
+
+    public function setSSLVerification($enable) {
+        $this->sslVerification = $enable;
     }
 
     private function getToken()
@@ -49,7 +55,6 @@ class Api
         $this->refresh_token = $response->refresh_token;
 
     }
-
 
     public function getUsers()
     {
@@ -154,8 +159,10 @@ class Api
         ));
 
 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        if (!$this->sslVerification) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        }
 
         $response = curl_exec($ch);
         curl_close($ch);
