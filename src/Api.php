@@ -119,8 +119,11 @@ class Api
      */
     public function curl($endpoint, $data, $type = "GET")
     {
-        if (!isset($this->access_token)) {
+        if (!isset($this->access_token) || strlen($this->access_token) == 0) {
             $this->getToken();
+        }
+        if (!isset($this->access_token) || strlen($this->access_token) == 0) {
+            throw new \Exception("Authentication failed");
         }
         return $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
     }
