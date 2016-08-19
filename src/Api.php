@@ -29,8 +29,6 @@ class Api
         $this->user_auth_key = $authKey;
         $this->user_email = $userEmail;
         $this->user_pw = $userPassword;
-        $this->getToken();
-
     }
 
     public function setSSLVerification($enable) {
@@ -121,6 +119,9 @@ class Api
      */
     public function curl($endpoint, $data, $type = "GET")
     {
+        if (!isset($this->access_token)) {
+            $this->getToken();
+        }
         return $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
     }
 
