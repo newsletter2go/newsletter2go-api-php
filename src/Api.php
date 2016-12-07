@@ -24,11 +24,13 @@ class Api
     private $sslVerification = true;
 
 
-    function __construct($authKey, $userEmail, $userPassword)
+    function __construct($authKey, $userEmail, $userPassword, $baseUrl="")
     {
         $this->user_auth_key = $authKey;
         $this->user_email = $userEmail;
         $this->user_pw = $userPassword;
+        $this->baseUrl = $baseUrl ?: static::BASE_URL ;
+
     }
 
     public function setSSLVerification($enable) {
@@ -152,7 +154,7 @@ class Api
 
         curl_setopt($ch, CURLOPT_POST, $post);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
-        curl_setopt($ch, CURLOPT_URL, static::BASE_URL . $endpoint . $get_params);
+        curl_setopt($ch, CURLOPT_URL, $this->baseUrl . $endpoint . $get_params);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 
