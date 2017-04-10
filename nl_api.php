@@ -3,7 +3,7 @@
 /*
 // USE like this:
 include_once('nl-api.php');
-//$rt=$newsl->addrecipientDOI("Email", "Vorname", "Nachname", "m");
+//$rt=$newsl->addrecipientDOI("Email", "Vorname", "Nachname", "m", $code); // code = your subscribe-form-code
 if ($rt->status<300) echo "OK:".$rt->info->count; else echo "ERR:".$rt->status;
 var_dump($rt);
 */
@@ -39,7 +39,7 @@ class nlapi extends NL2GO\Api {
         if (!in_array($gender, array('', 'm', 'f'))) {
             throw new \Exception("gender value not supported");
 		}
-		if ($code===false) $code='xxxxxxx-xxxxxxx-xxx'; // your code here
+		if ($code===false) $code='xxxxxxx-xxxxxxx-xxx'; // your subscribe-code here. it is displayed when creating a subscribe-form in your account settings 
         $endpoint = "/forms/submit/$code";
 
         return $this->curl($endpoint, array("recipient" => array(/*"list_id" => $listid,*/ "email" => $email, "gender" => $gender, "first_name" => $first_name, "last_name" => $last_name)), static::METHOD_POST);
@@ -59,7 +59,7 @@ $newsl = new nlapi("***API-key***", "***login-email***", "***login-password***")
 //var_dump($newsl);
 
 // add recipient with email confirmation
-//$rt=$newsl->addrecipientDOI("test@example.com", "Vorname", "Nachname", "f");
+//$rt=$newsl->addrecipientDOI("test@example.com", "Vorname", "Nachname", "f", $code); // code = your subscribe-form-code
 //var_dump($rt);
 
 // add or update recipient WITHOUT confirmation email
