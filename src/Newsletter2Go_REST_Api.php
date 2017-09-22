@@ -10,49 +10,49 @@ namespace NL2GO;
 class Newsletter2Go_REST_Api
 {
 
-    const GRANT_TYPE = "https://nl2go.com/jwt";
-    const BASE_URL = "https://api.newsletter2go.com";
+    const GRANT_TYPE = 'https://nl2go.com/jwt';
+    const BASE_URL = 'https://api.newsletter2go.com';
 
-    const METHOD_GET = "GET";
-    const METHOD_POST = "POST";
-    const METHOD_PATCH = "PATCH";
-    const METHOD_DELETE = "DELETE";
+    const METHOD_GET = 'GET';
+    const METHOD_POST = 'POST';
+    const METHOD_PATCH = 'PATCH';
+    const METHOD_DELETE = 'DELETE';
 
-    private $user_email = "email";
-    private $user_pw = "password";
-    private $user_auth_key = "authkey";
+    private $user_email = 'email';
+    private $user_pw = 'password';
+    private $user_auth_key = 'authkey';
 
-    private $access_token = "";
-    private $refresh_token = "";
+    private $access_token = '';
+    private $refresh_token = '';
 
     private $sslVerification = true;
 
 
-    function __construct($authKey, $userEmail, $userPassword)
+    public function __construct($authKey, $userEmail, $userPassword)
     {
         $this->user_auth_key = $authKey;
         $this->user_email = $userEmail;
         $this->user_pw = $userPassword;
     }
     
-    public function auth(){
-    	$this->getToken();
-    	
+    public function auth()
+    {
+        $this->getToken();
     }
 
-    public function setSSLVerification($enable) {
+    public function setSSLVerification($enable)
+    {
         $this->sslVerification = $enable;
     }
 
     private function getToken()
     {
-
-        $endpoint = "/oauth/v2/token";
+        $endpoint = '/oauth/v2/token';
 
         $data = array(
-            "username"   => $this->user_email,
-            "password"   => $this->user_pw,
-            "grant_type" => static::GRANT_TYPE
+            'username'   => $this->user_email,
+            'password'   => $this->user_pw,
+            'grant_type' => static::GRANT_TYPE
 
         );
 
@@ -60,8 +60,6 @@ class Newsletter2Go_REST_Api
 
         $this->access_token = $response->access_token;
         $this->refresh_token = $response->refresh_token;
-        
-
     }
 
     /**
@@ -70,11 +68,10 @@ class Newsletter2Go_REST_Api
      */
     public function getUsers()
     {
-
-        $endpoint = "/users";
+        $endpoint = '/users';
 
         $data = array(
-            "_expand" => true
+            '_expand' => true
         );
 
         return $this->curl($endpoint, $data);
@@ -89,7 +86,7 @@ class Newsletter2Go_REST_Api
     {
         $endpoint = "/lists/$listId/newsletters";
         $data = array(
-        		"_expand" => true
+            '_expand' => true
         );
         return $this->curl($endpoint, $data);
     }
@@ -101,13 +98,13 @@ class Newsletter2Go_REST_Api
      */
     public function getTemplates($listId)
     {
-    	$endpoint = "/lists/$listId/templates";
-    	$data = array(
-    			"_expand" => true,
-    			"_filter" => "type=='custom',type=='premium'"
-    	);
+        $endpoint = "/lists/$listId/templates";
+        $data = array(
+            '_expand' => true,
+            '_filter' => "type=='custom',type=='premium'"
+        );
     
-    	return $this->curl($endpoint, $data);
+        return $this->curl($endpoint, $data);
     }
     
     /**
@@ -118,28 +115,28 @@ class Newsletter2Go_REST_Api
      */
     public function getTemplate($listId, $templateId)
     {
-    	$endpoint = "/lists/$listId/templates/$templateId";
-    	$data = array(
-    			"_expand" => true,
-    	);
+        $endpoint = "/lists/$listId/templates/$templateId";
+        $data = array(
+            '_expand' => true
+        );
     
-    	return $this->curl($endpoint, $data);
+        return $this->curl($endpoint, $data);
     }
     
     
-	/**
-	 * create a new newsletter
-	 * https://docs.newsletter2go.com/#!/Newsletter/createNewsletter
-	 * @param string $listId
-	 * @param string $type can be 'default','transaction','doi'
-	 * @param string $name the name of the newsletter
-	 * @param string $header_from the from e-mail address
-	 * @param string $subject the subject of the newsletter
-	 * @param string $html you can pass html directly
-	 * @param string $json or you can pass json, which you can get from an existing template/mailing 
-	 * @throws \Exception
-	 * @return stdClass
-	 */
+    /**
+     * create a new newsletter
+     * https://docs.newsletter2go.com/#!/Newsletter/createNewsletter
+     * @param string $listId
+     * @param string $type can be 'default','transaction','doi'
+     * @param string $name the name of the newsletter
+     * @param string $header_from the from e-mail address
+     * @param string $subject the subject of the newsletter
+     * @param string $html you can pass html directly
+     * @param string $json or you can pass json, which you can get from an existing template/mailing
+     * @throws \Exception
+     * @return stdClass
+     */
     public function createNewsletter($listId, $type, $name, $header_from, $subject, $html = null, $json = null)
     {
         if (!in_array($type, array("transaction", "default", "doi"))) {
@@ -148,16 +145,16 @@ class Newsletter2Go_REST_Api
         $endpoint = "/lists/$listId/newsletters";
 
         $data = array(
-        		"type" => $type, 
-        		"name" => $name, 
-        		"subject" => $subject,        
-        		"header_from_email" => $header_from
+            'type' => $type,
+            'name' => $name,
+            'subject' => $subject,
+            'header_from_email' => $header_from
         );
-        if(isset($html)){
-        	$data['html'] = $html;
+        if (null !== $html) {
+            $data['html'] = $html;
         }
-        if(isset($json)){
-        	$data['json'] = $json;
+        if (null !== $json) {
+            $data['json'] = $json;
         }
         
         return $this->curl($endpoint, $data, static::METHOD_POST);
@@ -171,15 +168,14 @@ class Newsletter2Go_REST_Api
      */
     public function updateHTML($newsletterId, $html = null)
     {
-    	
-    	$endpoint = "/newsletters/$newsletterId";
-    
-    	$data = array(
-    			"html" => $html    			
-    	);
+        $endpoint = "/newsletters/$newsletterId";
+
+        $data = array(
+            'html' => $html
+        );
 
     
-    	return $this->curl($endpoint, $data, static::METHOD_PATCH);
+        return $this->curl($endpoint, $data, static::METHOD_PATCH);
     }
     
     /**
@@ -190,15 +186,13 @@ class Newsletter2Go_REST_Api
      */
     public function updateSubject($newsletterId, $subject = null)
     {
-    	 
-    	$endpoint = "/newsletters/$newsletterId";
+        $endpoint = "/newsletters/$newsletterId";
     
-    	$data = array(
-    			"subject" => $subject
-    	);
-    
-    
-    	return $this->curl($endpoint, $data, static::METHOD_PATCH);
+        $data = array(
+            'subject' => $subject
+        );
+
+        return $this->curl($endpoint, $data, static::METHOD_PATCH);
     }
 
     
@@ -237,11 +231,10 @@ class Newsletter2Go_REST_Api
      */
     public function getLists()
     {
-
-        $endpoint = "/lists";
+        $endpoint = '/lists';
 
         $data = array(
-            "_expand" => true
+            '_expand' => true
         );
 
         return $this->curl($endpoint, $data);
@@ -255,27 +248,25 @@ class Newsletter2Go_REST_Api
      * @param string $state can be 'active' or 'inactive'
      * @return stdClass
      */
-    public function setTransactionalState($newsletterId, $state){
-    	
-    	$endpoint = "/newsletters/$newsletterId";
-    	
-    	return $this->curl($endpoint, array("state" => $state), static::METHOD_PATCH);    	
-    	
+    public function setTransactionalState($newsletterId, $state)
+    {
+        $endpoint = "/newsletters/$newsletterId";
+
+        return $this->curl($endpoint, array("state" => $state), static::METHOD_PATCH);
     }
     
     /**
-     * Send a newsletter 
+     * Send a newsletter
      * https://docs.newsletter2go.com/#!/Newsletter/sendNewsletter
      * @param string $newsletterId defines the newsletter that should be sent
      * @param array $recipient_data data of recipients
      * @return stdClass
      */
-    public function sendNewsletter($newsletterId, $recipient_data){
-    	
-    	$endpoint = "/newsletters/$newsletterId/send";   	
-    	
-    	return $this->curl($endpoint, $recipient_data, static::METHOD_POST);
-    	
+    public function sendNewsletter($newsletterId, $recipient_data)
+    {
+        $endpoint = "/newsletters/$newsletterId/send";
+
+        return $this->curl($endpoint, $recipient_data, static::METHOD_POST);
     }
 
 
@@ -286,25 +277,24 @@ class Newsletter2Go_REST_Api
      * @return \stdClass
      * @throws \Exception
      */
-    public function curl($endpoint, $data, $type = "GET")
+    public function curl($endpoint, $data, $type = 'GET')
     {
         if (!isset($this->access_token) || strlen($this->access_token) == 0) {
             $this->getToken();
         }
         if (!isset($this->access_token) || strlen($this->access_token) == 0) {
-            throw new \Exception("Authentication failed");
+            throw new \Exception('Authentication failed');
         }
         return $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
     }
 
-    private function _curl($authorization, $endpoint, $data, $type = "GET")
+    private function _curl($authorization, $endpoint, $data, $type = 'GET')
     {
-
         $ch = curl_init();
 
         $data_string = json_encode($data);
 
-        $get_params = "";
+        $get_params = '';
 
         if ($type == static::METHOD_POST || $type == static::METHOD_PATCH) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
@@ -312,9 +302,9 @@ class Newsletter2Go_REST_Api
         } else {
             if ($type == static::METHOD_GET || $type == static::METHOD_DELETE) {
                 $post = false;
-                $get_params = "?" . http_build_query($data);
+                $get_params = '?' . http_build_query($data);
             } else {
-                throw new \Exception("Invalid HTTP method: " . $type);
+                throw new \Exception('Invalid HTTP method: ' . $type);
             }
         }
 
@@ -333,8 +323,8 @@ class Newsletter2Go_REST_Api
 
 
         if (!$this->sslVerification) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         }
 
         $response = curl_exec($ch);
