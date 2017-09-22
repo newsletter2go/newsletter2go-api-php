@@ -333,8 +333,8 @@ class Newsletter2Go_REST_Api
 
 
         if (!$this->sslVerification) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         }
 
         $response = curl_exec($ch);
