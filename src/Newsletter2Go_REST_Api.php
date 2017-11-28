@@ -308,18 +308,17 @@ class Newsletter2Go_REST_Api
 
         if ($type == static::METHOD_POST || $type == static::METHOD_PATCH) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-            $post = true;
+  	    if ($type == static::METHOD_POST) {
+	    	curl_setopt($ch, CURLOPT_POST, true);
+	    }
         } else {
             if ($type == static::METHOD_GET || $type == static::METHOD_DELETE) {
-                $post = false;
                 $get_params = "?" . http_build_query($data);
             } else {
                 throw new \Exception("Invalid HTTP method: " . $type);
             }
         }
 
-
-        curl_setopt($ch, CURLOPT_POST, $post);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $type);
         curl_setopt($ch, CURLOPT_URL, static::BASE_URL . $endpoint . $get_params);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
