@@ -57,6 +57,10 @@ class Newsletter2Go_REST_Api
         );
 
         $response = $this->_curl('Basic ' . base64_encode($this->user_auth_key), $endpoint, $data, "POST");
+    
+        if (isset($response->error)) {
+            throw new \Exception("Authentication failed: " . $response->error);
+        }
 
         $this->access_token = $response->access_token;
         $this->refresh_token = $response->refresh_token;
