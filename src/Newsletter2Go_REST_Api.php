@@ -339,6 +339,13 @@ class Newsletter2Go_REST_Api
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return json_decode($response);
+        $json_decoded = json_decode($response);
+
+	if(isset($json_decoded)){
+		return $json_decoded;
+	}
+	else{
+		return $response; // for pdf download
+	}
     }
 }
