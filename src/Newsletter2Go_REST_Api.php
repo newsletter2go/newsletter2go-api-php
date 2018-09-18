@@ -165,7 +165,7 @@ class Newsletter2Go_REST_Api
     
     /**
      * Update the HTML of an existing newsletter
-     * https://docs.newsletter2go.com/#!/Newsletter/updateNewsletter
+     * https://docs.newsletter2go.com/#76993cf1-63df-4bb9-89ee-393d2e8593f3
      * @param string $html
      * @return stdClass
      */
@@ -184,7 +184,7 @@ class Newsletter2Go_REST_Api
     
     /**
      * Update subject of an existing newsletter
-     * https://docs.newsletter2go.com/#!/Newsletter/updateNewsletter
+     * https://docs.newsletter2go.com/#76993cf1-63df-4bb9-89ee-393d2e8593f3
      * @param string $subject
      * @return stdClass
      */
@@ -204,7 +204,7 @@ class Newsletter2Go_REST_Api
     
     /**
      * Update name, subject or html of an existing newsletter
-     * https://docs.newsletter2go.com/#!/Newsletter/updateNewsletter
+     * https://docs.newsletter2go.com/#76993cf1-63df-4bb9-89ee-393d2e8593f3
      * @param string $newsletterId
      * @param string $name
      * @param string $subject
@@ -250,7 +250,7 @@ class Newsletter2Go_REST_Api
     
     /**
      * If you want to send transactional newsletters, you have to activate it first
-     * https://docs.newsletter2go.com/#!/Newsletter/updateNewsletter
+     * https://docs.newsletter2go.com/#76993cf1-63df-4bb9-89ee-393d2e8593f3
      * @param string $newsletterId
      * @param string $state can be 'active' or 'inactive'
      * @return stdClass
