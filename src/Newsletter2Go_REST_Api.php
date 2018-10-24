@@ -57,6 +57,10 @@ class Newsletter2Go_REST_Api
         );
 
         $response = $this->_curl('Basic ' . base64_encode($this->user_auth_key), $endpoint, $data, "POST");
+    
+        if (isset($response->error)) {
+            throw new \Exception("Authentication failed: " . $response->error);
+        }
 
         $this->access_token = $response->access_token;
         $this->refresh_token = $response->refresh_token;
@@ -278,7 +282,6 @@ class Newsletter2Go_REST_Api
     	
     }
 
-
     /**
      * @param $endpoint string the endpoint to call (see docs.newsletter2go.com)
      * @param $data array tha data to submit. In case of POST and PATCH its submitted as the body of the request. In case of GET and PATCH it is used as GET-Params. See docs.newsletter2go.com for supported parameters.
@@ -294,7 +297,16 @@ class Newsletter2Go_REST_Api
         if (!isset($this->access_token) || strlen($this->access_token) == 0) {
             throw new \Exception("Authentication failed");
         }
-        return $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
+
+        $apiReponse = $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
+
+        // check if token is expired
+        if (isset($apiReponse->error) && $apiReponse->error == "invalid_grant") {
+            $this->getToken();
+            $apiReponse = $this->_curl('Bearer ' . $this->access_token, $endpoint, $data, $type);
+        }
+
+        return $apiReponse;
     }
 
     private function _curl($authorization, $endpoint, $data, $type = "GET")
