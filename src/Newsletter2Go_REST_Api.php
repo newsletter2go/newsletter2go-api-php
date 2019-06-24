@@ -283,6 +283,43 @@ class Newsletter2Go_REST_Api
     }
 
     /**
+     * @param $email
+     * @param $first_name
+     * @param $last_name
+     * @param string $gender
+     * @return \stdClass
+     */
+    public function addRecipient($email, $first_name, $last_name, $gender='')
+    {
+        if (!in_array($gender, array('', 'm', 'f'))) {
+            throw new \Exception("gender value not supported");
+        }
+        $endpoint = "/recipients";
+        return $this->curl($endpoint, array("email" => $email, "gender" => $gender, "first_name" => $first_name, "last_name" => $last_name), static::METHOD_POST);
+    }
+
+    /**
+     * @param string $code the form-subscribe-code. it is displayed when creating a subscribe-form in your account settings
+     * @param string $email
+     * @param string $first_name
+     * @param string $last_name
+     * @param string $gender
+     * @return \stdClass
+     */
+    public function addRecipientViaForm($code, $email, $first_name, $last_name, $gender='')
+        // sends a confirmation mail
+    {
+        if (!in_array($gender, array('', 'm', 'f'))) {
+            throw new \Exception("gender value not supported");
+        }
+        if (!is_string($code)) {
+            throw new \Exception("form-subscribe-code not given");
+        }
+        $endpoint = "/forms/submit/$code";
+        return $this->curl($endpoint, array("recipient" => array("email" => $email, "gender" => $gender, "first_name" => $first_name, "last_name" => $last_name)), static::METHOD_POST);
+    }
+
+    /**
      * @param $endpoint string the endpoint to call (see docs.newsletter2go.com)
      * @param $data array tha data to submit. In case of POST and PATCH its submitted as the body of the request. In case of GET and PATCH it is used as GET-Params. See docs.newsletter2go.com for supported parameters.
      * @param string $type GET,PATCH,POST,DELETE
