@@ -245,7 +245,7 @@ class Newsletter2Go_REST_Api
             "is_blacklisted" => $is_blacklisted
         );
         
-        return $this->curl($endpoint, $data, static::METHOD_POST);
+        return $this->curl($endpoint, $data, static::METHOD_PATCH);
     }
     
     /**
@@ -297,7 +297,7 @@ class Newsletter2Go_REST_Api
             "is_blacklisted" => $is_blacklisted
         );
         
-        return $this->curl($endpoint, $data, static::METHOD_POST);
+        return $this->curl($endpoint, $data, static::METHOD_PATCH);
     }
     
     /**
@@ -329,7 +329,7 @@ class Newsletter2Go_REST_Api
             "is_blacklisted" => $is_blacklisted
         );
         
-        return $this->curl($endpoint, $data, static::METHOD_POST);
+        return $this->curl($endpoint, $data, static::METHOD_PATCH);
     }
     
     /**
