@@ -10,7 +10,7 @@ This PHP library is intended to be used as a facade to our API exposed services.
 Additional Information:
 - API version: 1.4
 - This library follows the structure from our [Postman Collection File](https://github.com/newsletter2go/api-docs)
-- You can post [any request, bug or issue]() or also reach us at: implementation@newsletter2go.com
+- You can post [any request, bug or issue](https://github.com/newsletter2go/newsletter2go-api-php/issues) or also reach us at: implementation@newsletter2go.com
 
 
 ## Requirements
