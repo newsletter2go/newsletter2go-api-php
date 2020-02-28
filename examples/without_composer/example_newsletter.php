@@ -24,7 +24,7 @@ $currentListId = "put a list id here";
 $html = "<html><body>Hello World</body></html>";
 
 //create new  mailing
-$result = $api->createNewsletter($currentListId, "default", "Name Test", "from@example.org", "Subject Test", $html, null); 
+$result = $api->createMailing($currentListId, "default", "Name Test", false, false, false, "Subject Test", "from@example.org", "Example From", "reply@example.org", "Example Reply", $html, null);
 
 $newsletter_id = $result->value[0]->id; #maybe save this id to GET the reports later
 

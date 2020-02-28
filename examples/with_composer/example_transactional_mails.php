@@ -55,7 +55,7 @@ $data = array(
 								/*
 								 * If this recipient does not exist in your current list (addressbook), it will not be added to it.
 								 * If this recipient already exists in your current list and you dont provide data for the personalization here (e.g. date_purchase),
-								 * we try to get it from the recipient data wihich is stored in the list.
+								 * we try to get it from the recipient data which is stored in the list.
 								 */
 						),
 					),
