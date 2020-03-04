@@ -496,13 +496,16 @@ This call is useful for automated mailings that run every day since it returns t
 |`stdClass`|@return stdClass| returnedObject |
 
 
-- ### submitForm()
-[submitForm() - API Documentation](https://docs.newsletter2go.com/?version=latest#46cc4c57-dc6e-440c-83ec-f214f9d24a1a)
+- ### addRecipientViaForm()
+[addRecipientViaForm() - API Documentation](https://docs.newsletter2go.com/?version=latest#46cc4c57-dc6e-440c-83ec-f214f9d24a1a)
 
 | Parameter | Type  | Description |
 |--|--|--|
-|`$formId`|@param string| Form Id to be submitted.|
-|`$address`|@param string| E-mail address of form recipient.|
+|`$code`|@param string| Form Id to be submitted.|
+|`$email`|@param string| Recipient's e-mail.|
+|`$first_name`|@param string| Recipient's name.|
+|`$last_name`|@param string| Recipient's last name.|
+|`$gender`|@param string| Recipient's gender.|
 |`stdClass`|@return stdClass| returnedObject |
 
 # Company
