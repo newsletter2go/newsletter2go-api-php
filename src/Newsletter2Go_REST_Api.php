@@ -1164,12 +1164,13 @@ class Newsletter2Go_REST_Api
      * @param string $first_name
      * @param string $last_name
      * @param string $gender
+     * @param array $custom_attributes
      * @return \stdClass
      *
      * @throws \Exception
      */
-    public function addRecipientViaForm($code, $email, $first_name, $last_name, $gender = '')
-    // sends a confirmation mail
+    public function addRecipientViaForm($code, $email, $first_name = '', $last_name = '', $gender = '', $custom_attributes = array())
+        // sends a confirmation mail
     {
         if (!in_array($gender, array(
             '',
@@ -1182,14 +1183,23 @@ class Newsletter2Go_REST_Api
             throw new \Exception("form-subscribe-code not given");
         }
         $endpoint = "/forms/submit/$code";
-        return $this->curl($endpoint, array(
+
+        $data = array(
             "recipient" => array(
                 "email" => $email,
                 "gender" => $gender,
                 "first_name" => $first_name,
                 "last_name" => $last_name
             )
-        ), static::METHOD_POST);
+        );
+
+        if (!empty($custom_attributes)) {
+            foreach ($custom_attributes as $attribute_name => $attribute_value) {
+                $data["recipient"][$attribute_name] = $attribute_value;
+            }
+        }
+
+        return $this->curl($endpoint, $data, static::METHOD_POST);
     }
     
     
