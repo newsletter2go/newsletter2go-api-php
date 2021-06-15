@@ -22,7 +22,7 @@ Additional Information:
 
 To install from the cli with [Composer](http://getcomposer.org/), simply run:
 
-```
+```bash
 composer require newsletter2go/api
 composer install
 ```
@@ -34,7 +34,7 @@ You can also download the [standalone class](https://github.com/newsletter2go/ne
 ## Implementation
 
 * This example shows how to setup your account credentials and make further API calls.
-```
+```php
 <?php
 namespace NL2GO;
 
